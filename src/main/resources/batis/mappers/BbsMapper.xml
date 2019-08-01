@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="kr.ac.hit.myapp.bbs.BbsDao">
+
+	<resultMap type="BbsVo" id="bbsMap">
+		<id column="bbs_no" property="bbsNo" />
+		<result column="bbs_title" property="bbsTitle" />
+		<result column="bbs_content" property="bbsContent" />
+		<result column="bbs_writer" property="bbsWriter" />
+		<result column="bbs_reg_date" property="bbsRegDate" />
+		<result column="bbs_count" property="bbsCount" />
+		<!-- 조인 결과 다수의 객체(리스트)로 담아야 하는 컬럼값들은 collection을 사용 -->
+		<collection property="attList"  ofType="AttachVo">
+		<id column="att_no" property="attNo" />
+		<result column="att_org_name" property="attOrgName" />
+		<result column="att_new_name" property="attNewName" />
+		<result column="att_bbs_no" property="attBbsNo" />
+		</collection>
+	</resultMap>
+   
+ <!--  useGeneratedKeys를 사용하여(AUTO_INCREMENT에 의해서) 자동생성된 PK(기본값)을 파라미터 객체의 keyProperty에지정된 
+ 속성(변수)에 저장 가능 저장시킬 수 있다. -->
+      <insert id="insert" parameterType="BbsVo" useGeneratedKeys="true"  keyProperty="bbsNo">
+          INSERT INTO bbs
+		( bbs_title, bbs_content, bbs_writer)
+		VALUES ( #{bbsTitle}, #{bbsContent}, #{bbsWriter} )
+      </insert>
+      <select id="selectList" resultType="BbsVo" >
+          SELECT bbs_no , bbs_title , bbs_writer , bbs_reg_date , bbs_count 
+          FROM bbs 
+          ORDER BY  bbs_reg_date DESC
+          LIMIT #{firstRecordIndex},#{size}
+      </select>
+      <select id="selectCount" resultType="int">
+          SELECT COUNT(bbs_no) FROM bbs
+      </select>
+      <select id="select" parameterType="int"  resultMap="bbsMap">
+	SELECT bbs_no, bbs_title, bbs_content, bbs_writer, bbs_reg_date,att_no, att_org_name, att_new_name, att_bbs_no
+	FROM bbs left outer join attach ON bbs_no = att_bbs_no
+	WHERE bbs_no = #{bbsNo} 
+      </select>
+      
+      <update id="update" parameterType="BbsVo" >
+          UPDATE bbs 
+          SET bbs_title = #{bbsTitle}, bbs_content = #{bbsContent}
+          WHERE bbs_no = #{bbsNo} and  bbs_writer = #{bbsWriter}
+      </update>
+      <delete id="delete" parameterType="BbsVo" >
+          DELETE FROM bbs
+           WHERE bbs_no = #{bbsNo} and  bbs_writer = #{bbsWriter}
+      </delete>
+      
+  </mapper>
+  
