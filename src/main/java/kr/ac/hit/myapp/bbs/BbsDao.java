@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.ac.hit.myapp.comm.PageInfo;
+import kr.ac.hit.myapp.comm.SearchInfo;
 
 @Mapper
 public interface BbsDao {
@@ -18,5 +19,5 @@ public interface BbsDao {
 
 	public int delete(BbsVo vo);
 
-	public int selectCount();
+	public int selectCount(SearchInfo info);
 }

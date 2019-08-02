@@ -2,12 +2,22 @@ package kr.ac.hit.myapp.member;
 
 import java.util.List;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class memberVo {
+	@NotNull @Size(min=4,max=50)
 	private String memId;
+	@NotNull @Size(min=4,max=50)
 	private String memPass;
+	@NotNull @Size(min=2,max=50)
 	private String memName;
+	@NotNull @Digits(integer=10,fraction=0) @PositiveOrZero //정수 10자리의 0혹은 양수
 	private int memPoint;
 	
 	private String memImg; //DB 테이블의 컬럼값을 주고 받기 위한 변수

@@ -31,10 +31,7 @@ public class PageInfo {
 		
 		String html = "";
 		
-		//페이지는 12345씩 변함, 1페이지의 퍼스트페이지는 1 라스트 페이지는 5 
-		//그럼 페이지의 1번~5번은 이전이 뜨면 안된다.
-		//for 문에서 이전태그를 다 넣을수가 없다
-		switch (page) {
+		/*switch (page) {
 		case 1:
 			html += "<a> 이전 </a>"; break;
 		case 2:
@@ -68,18 +65,38 @@ public class PageInfo {
 		}else {
 			html += "<a> 마지막 </a>";
 		}
-		if(page < totalRecordCount/5) {
-			
+		if(totalRecordCount/size >= lastPageNoOnPageList-size ) {
+			html += "<a> 다음 </a>";
+		}else {
 			html += "<a href='#' onclick='goPage(" + (lastPageNoOnPageList+1) + ");' > 다음 </a>";
 		}
-		else {
+		*/
+		//교수님 
+		if(firstPageNoOnPageList !=1 ) {
+			html += "<a href='#' onclick='goPage(1);' > 처음 </a>"; //처음을 아예 안 나오게 하셨습니다.
+		}
+		if(firstPageNoOnPageList !=1) {
+			html += "<a href='#' onclick='goPage(" + (firstPageNoOnPageList - 1) + ");' > 이전 </a>";
+		}else {
+			html += "<a> 이전 </a>";
+		}
+		for (int i = firstPageNoOnPageList; i <= lastPageNoOnPageList; i++) {
+			if(i==page) {
+				html += "<a> " + i + "</a>";
+			}
+			else {
+				html += "<a href='#' onclick='goPage(" + i + ");' > " + i + "</a>";				
+			}
+		}
+		if(lastPageNoOnPageList < totalRecordCount) {
+			html += "<a href='#' onclick='goPage(" + (lastPageNoOnPageList+1) + ");' > 다음 </a>";
+		}else {
 			html += "<a> 다음 </a>";
 		}
-		
-		
+		if(lastPageNoOnPageList < totalRecordCount) {
+			html += "<a href='#' onclick='goPage(" + totalPageCount + ");' > 마지막 </a>";
+		}
 		pageHtml = html;
-		System.out.println(page);
-		System.out.println(totalRecordCount);
 	}
 	
 	public String getPageHtml() {

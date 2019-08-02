@@ -14,8 +14,22 @@
 <body>
 <%@ include file="/WEB-INF/views/comm/menu.jsp" %>
 	<h1>게시글 목록</h1>
-	
-		<table>
+
+	<form id="sform" action="${pageContext.request.contextPath}/bbs/list.do">
+		<select name="searchType">
+			<option value="title">제목</option>
+			<option value="content">내용</option>
+			<option value="total">제목+내용</option>
+		</select> <input type="text" name="searchWord" value="${searchInfo.searchWord}" />
+		<input type="hidden" name="page" value="1" />
+		<input type="submit" value="검색" />
+	</form>
+	<script>
+		//searchType select 의 기본값을 설정하기 위해서
+		if('${searchInfo.searchType}' ) //searchType 값이 존재하는 경우에만 (자바스크립트에서 빈문자열은 false취급) 
+		document.querySelector('[name="searchType"]').value = '${searchInfo.searchType}'
+	</script>
+	<table>
 		<thead>
 		<tr><th> 번호 </th><th> 제목 </th><th> 작성자 </th><th> 작성일 </th></tr>
 		</thead>
@@ -39,12 +53,13 @@
 		</tbody>
 		</table>
 		
-		${pageInfo.pageHtml}
+		${searchInfo.pageHtml}
 		<script >
-		/* 페이지 링크 클릭시 실행될 goPage() 함수를 재정의할 필요가 있을 경우, 다시 선언  */
-	/* 	function goPage(no) {
-			location.href = location.pathname + '?page=' + no;
-		} */
+		//페이지 링크 클릭시 실행될 goPage() 함수를 재정의할 필요가 있을 경우, 다시 선언 
+	 	function goPage(no) { //form안에 페이지 ㅣ번호 파라미터를 설정하고 폼을 전송
+			document.querySelector('[name="page"]').value =no; 
+			document.querySelector('#sform').submit();
+		} 
 		</script>
 		<hr />
 		<a href="${pageContext.request.contextPath}/bbs/add.do"> <button>글쓰기</button></a>

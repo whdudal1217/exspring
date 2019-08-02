@@ -27,15 +27,38 @@
 		( bbs_title, bbs_content, bbs_writer)
 		VALUES ( #{bbsTitle}, #{bbsContent}, #{bbsWriter} )
       </insert>
+      <!-- 다수의 sql문에서 공통적으로 사용할 부분을 별도의 sql 엘리먼트로 선언하고 고유한 id를 부여 -->
+      <!-- 필요한 곳에서 include 를 사용하여 포함시켜서 사용 -->
+       <sql id="searchSql">
+          <!--  trim 내부에 내용이 있는 경우에만 앞에 WHERE를 붙임 -->
+          <!-- 내용의 시작이 AND|OR 인 경우, AND 또는 OR를 제거 -->
+          <trim prefix="WHERE"  prefixOverrides="AND|OR"> 
+               <if test="searchType == 'title' or searchType=='total'">
+           bbs_title like concat('%' ,#{searchWord}, '%')
+          </if>
+          <if test="searchType == 'content' or searchType=='total' ">
+               OR bbs_content like concat('%', #{searchWord}, '%')
+          </if>
+          </trim> 
+         
+      </sql>
+      
       <select id="selectList" resultType="BbsVo" >
           SELECT bbs_no , bbs_title , bbs_writer , bbs_reg_date , bbs_count 
           FROM bbs 
-          ORDER BY  bbs_reg_date DESC
+          <!-- id가 "searchSql" sql 엘리먼트의 내용을 이곳에 추가~ -->
+          <include refid="searchSql"></include>
+           ORDER BY  bbs_reg_date DESC
           LIMIT #{firstRecordIndex},#{size}
       </select>
+      
+      <!--  #은 물음표 $는 문자가 + 를 넣고 끼어들어감 -->
       <select id="selectCount" resultType="int">
-          SELECT COUNT(bbs_no) FROM bbs
+          SELECT COUNT(bbs_no) 
+          FROM bbs
+          <include refid="searchSql"></include>
       </select>
+      
       <select id="select" parameterType="int"  resultMap="bbsMap">
 	SELECT bbs_no, bbs_title, bbs_content, bbs_writer, bbs_reg_date,att_no, att_org_name, att_new_name, att_bbs_no
 	FROM bbs left outer join attach ON bbs_no = att_bbs_no

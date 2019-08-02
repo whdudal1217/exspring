@@ -13,7 +13,7 @@ height:100px;
 </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/comm/menu.jsp" %>
+<%-- <%@ include file="/WEB-INF/views/comm/menu.jsp" %> --%>
 	<h1>회원정보수정</h1>
 	   <c:choose>
 			<c:when test="${memberVo.memImg == null }">

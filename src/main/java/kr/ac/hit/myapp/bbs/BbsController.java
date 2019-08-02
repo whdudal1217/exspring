@@ -17,10 +17,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.ac.hit.myapp.comm.PageInfo;
+import kr.ac.hit.myapp.comm.SearchInfo;
 import kr.ac.hit.myapp.member.memberVo;
 
 @Controller
@@ -43,14 +45,20 @@ public class BbsController {
 		return "redirect:/bbs/list.do";
 	}
 	
+	//컨트롤러 메서드의 인자로 사용자가 정의한 클래스의 객체를 받는 경우, 
+	//그 객체를 뷰(jsp)에서 사용하기 위해 모델에 저장하는 방법
+	//1. 모델(Map,Model,ModelMap 타입)에 이름을 부여하여 저장
+	//2. 인자 앞에 @ModelAttribute("모델이름")을 붙이면 자동 저장
+	//3. @ModelAttribute("모델이름")을 생략해도 모델에 자동 저장(이름은 클래스 이름 첫글자만 소문자로 바뀌어서)
 	@RequestMapping(value = "/bbs/list.do")
-	public String list(Map model, PageInfo info) { 
-		int cnt = bbsService.selectCount();
+	public String list(Map model /*2번 방식,@ModelAttribute("searchInfo")SearchInfo info*/,  /*3번 방식*/ SearchInfo info	) { 
+		int cnt = bbsService.selectCount(info);
 		info.setTotalRecordCount(cnt);
 		info.makePageHtml();
-		model.put("pageInfo", info); //이걸 생략해도 괜찮긴 하지만 넣읍시다
+		// 1번방식		model.put("pageInfo", info); //이걸 생략해도 괜찮긴 하지만 넣읍시다
 		List <BbsVo> list = bbsService.selectList(info);
-		model.put("bbsList", list); //jsp에서 사용할 이름,
+
+		model.put("bbsList", list); //jsp에서 사용할 이름
 		return "bbs/bbsList";
 	}
 	
