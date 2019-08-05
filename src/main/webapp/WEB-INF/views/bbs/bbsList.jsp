@@ -12,7 +12,7 @@
 <title>게시판</title>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/comm/menu.jsp" %>
+
 	<h1>게시글 목록</h1>
 
 	<form id="sform" action="${pageContext.request.contextPath}/bbs/list.do">

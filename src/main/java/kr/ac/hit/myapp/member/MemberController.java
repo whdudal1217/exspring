@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.ac.hit.myapp.comm.MemSearchInfo;
+
 @Controller
 public class MemberController {
 
@@ -52,10 +54,12 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="/member/list.do" )
-	public String list(Map modelMap) {
+	public String list(Map modelMap, MemSearchInfo info) {
 		//데이터베이스에서 회원목록을 조회하고
-
-		List<memberVo> list = memberService.selectList();
+		int cnt = memberService.selectCount(info);
+		info.setTotalRecordCount(cnt);
+		info.makePageHtml();
+		List<memberVo> list = memberService.selectList(info);
 		modelMap.put("memberList", list);
 		return "member/memList";
 	}

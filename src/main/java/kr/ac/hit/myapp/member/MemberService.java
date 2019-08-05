@@ -3,10 +3,12 @@ package kr.ac.hit.myapp.member;
 import java.io.File;
 import java.util.List;
 
+import kr.ac.hit.myapp.comm.MemSearchInfo;
+
 public interface MemberService {
 	public int insert(memberVo vo);
 	
-	public List<memberVo> selectList() ;
+	public List<memberVo> selectList(MemSearchInfo info) ;
 	
 	public memberVo select(String memId) ;
 
@@ -17,4 +19,6 @@ public interface MemberService {
 	public memberVo selectLoginUser(memberVo vo);
 
 	public File getImgFile(memberVo vo);
+
+	public int selectCount(MemSearchInfo info);
 }

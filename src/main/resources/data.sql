@@ -53,6 +53,8 @@ delete from bbs where bbs_no = 6;
 
 SELECT bbs_no, bbs_title, bbs_content, bbs_writer, bbs_reg_date FROM bbs WHERE bbs_title like CONCAT('%', '1', '%')limit , 10; 
 
+SELECT bbs_no, bbs_title, bbs_content, bbs_writer, bbs_reg_date FROM bbs WHERE bbs_title like CONCAT('%', '1', '%')limit , 10; 
+
 -- 첨부파일 테이블 생성  
 CREATE TABLE attach
 ( 

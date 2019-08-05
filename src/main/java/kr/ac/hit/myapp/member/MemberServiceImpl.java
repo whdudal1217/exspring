@@ -21,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.ac.hit.myapp.comm.MemSearchInfo;
+
 //@Component(역할이 없을 때) @Controller(CONTROLLER) @Service(SERVICE) @Repository(DAO) 
 //이 넷중에 하나만 등록하면 스프링이 new해서 가지게 됨
 
@@ -64,9 +66,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<memberVo> selectList() {
-		List<memberVo> list = memberDao.selectList();
-		return list; //컨트롤러에게 주세요
+	public List<memberVo> selectList(MemSearchInfo info) {
+		
+		return memberDao.selectList(info);
 	}
 
 	@Override
@@ -96,4 +98,10 @@ public class MemberServiceImpl implements MemberService {
 	public File getImgFile(memberVo vo) {
 		return new File(uploadImgDir, vo.getMemImg());
 	}
+
+	@Override
+	public int selectCount(MemSearchInfo info) {
+		return memberDao.selectCount(info);
+	}
+
 }
