@@ -20,7 +20,7 @@
 			<option value="content">이름</option>
 			<option value="total">번호+이름</option>
 		</select> 
-		<input type="text" name="searchWord" value="${searchInfo.searchWord}" />
+		<input type="text" name="searchWord" value="${memSearchInfo.searchWord}" />
 		<input type="hidden" name="page" value="1" />
 		<input type="submit" value="검색" />
 	</form>
@@ -41,8 +41,16 @@
 	 ${vo.memId}:${vo.memName } <br />
 	 </c:if>
 	 </c:forEach>
-	 
-	 ${searchInfo.pageHtml}
+	 <br />
+	${memSearchInfo.pageHtml}
+	
+	
+		<script>
+	 	function goPage(no) { 
+			document.querySelector('[name="page"]').value =no; 
+			document.querySelector('#sform').submit();
+		} 
+		</script>
 	 <hr />
 	 <a href="${pageContext.request.contextPath }/member/add.do">회원가입</a>
 </body>

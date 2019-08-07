@@ -8,7 +8,6 @@
 <title>게시판</title>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/comm/menu.jsp" %>
 	<h1>글 상세정보</h1>
 	<form action="${pageContext.request.contextPath}/bbs/edit.do" method="post">
 	<input type="hidden" name="bbsNo" value="${bbsVo.bbsNo}" />
@@ -38,6 +37,30 @@
 		<a href="${pageContext.request.contextPath}/bbs/del.do?bbsNo=${bbsVo.bbsNo}"><input type="button"  value="삭제"/></a>
 	</c:if>
 	</form>
-	
+	<hr />
+	<form action=""  id="repForm">
+	<textarea rows="5" cols="50" name="repContent"></textarea>
+	<input type="button" value="저장"  id="repAddBtn" />
+	<input type="hidden" value="${bbsVo.bbsNo}" name="repBbsNo">
+	</form>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
+	<script type="text/javascript">
+	$('#repAddBtn').on('click',function(){
+	 $.ajax({
+         url : '${pageContext.request.contextPath}/reply/add.do', //요청주소
+         method : 'POST', //요청방식 (GET, POST, PUT, DELETE ...)
+         data : 'repBbsNo='+$('[name="repBbsNo"]').val()+'&repContent='+$('[name="repContent"]').val()+'&repWriter='+$('[name="repWriter"]').val()
+         dataType : 'json', //요청의 응답으로 받을 데이터의 타입 (text, html, json, xml ...)
+     })
+     .done(function(data, status, jqXHR){ //요청을 보내고 성공적으로 응답을 받았을 때 실행될 함수
+             //date: 응답으로 받은 데이터, status: 응답의 상태, jqXHR: 요청객체
+             console.log('요청성공 :');
+             console.log(data);
+         }).fail(function(jqXHR, status, error){
+             //실패 했을 때 실행될 함수 jqXHR: 요청객체, status: 응답 상태, error: 발생한 오류
+             console.log('요청실패: ',status);
+         })
+	})
+	</script>
 </body>
 </html>
