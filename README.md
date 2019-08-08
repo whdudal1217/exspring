@@ -1,5 +1,15 @@
 # Spring Framework Study
 
+##프로젝트 실행 방법
+*  /src/test/resources/env.properties 파일 생성 후 내용을 다음과 같이 작성
+~~~
+	#데이터베이스 접속 정보
+	db.driver=com.mysql.jdbc.Driver
+	db.url=jdbc:mysql://localhost:3306/com
+	db.username=
+	db.password=
+~~~
+
 - spring
 	- https://spring.io/projects/spring-framework
 	- (한글) https://blog.outsider.ne.kr/tag/spring_reference_documentation
