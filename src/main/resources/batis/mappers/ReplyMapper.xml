@@ -10,13 +10,14 @@
 		VALUES ( #{repContent}, #{repWriter}, #{repBbsNo})
       </insert>
       
-      <select id="selectList" resultType="ProdVo" >
-          SELECT prod_no , prod_name , prod_price FROM product
+      <select id="selectList"  parameterType="String" resultType="ReplyVo" >
+          SELECT rep_no, rep_content , rep_writer, rep_date , rep_bbs_no FROM reply WHERE rep_bbs_no = #{repBbsNo}
+          ORDER BY rep_date DESC;
       </select>
       
-      <delete id="delete" parameterType="int" >
-          DELETE FROM product
-           WHERE prod_no = #{prodNo}
+      <delete id="delete" parameterType="ReplyVo" >
+          DELETE FROM reply
+           WHERE rep_no = #{repNo} AND rep_writer = #{repWriter}
       </delete>
       
   </mapper>

@@ -39,8 +39,7 @@
 					<td>${vo.bbsNo}</td>
 					<td>
 						<%-- <a href="${pageContext.request.contextPath}/bbs/edit.do?bbsNo=${vo.bbsNo}">${vo.bbsTitle}</a> --%>
-						<a
-						href="${pageContext.request.contextPath}/bbs/edit.do?bbsNo=${vo.bbsNo}">
+						<a href="${pageContext.request.contextPath}/bbs/edit.do?bbsNo=${vo.bbsNo}">
 							<c:out value="${vo.bbsTitle}" escapeXml="true" /> <%-- ${fn:escapeXml(vo.bbsTitle)} --%>
 					</a> <%-- <c:out value="${xx}">또는 ${fn:escapeXml(xx)} 를 이용해서 출력하면 기본적으로 태그를 특수문자로 변환하여 출력합니다  --%>
 					</td>

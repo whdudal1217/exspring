@@ -87,6 +87,8 @@ CREATE TABLE reply
 );
 SELECT * FROM reply;
 
+DELETE FROM reply WHERE rep_writer is null;
+
 --상품테이블 : 상품번호, 상품명, 상품가격, 상품설명, 제조사 (제조일자, 유통기한, 상품이미지)
 CREATE TABLE product
 ( prod_no INT PRIMARY KEY AUTO_INCREMENT, 
@@ -95,6 +97,7 @@ CREATE TABLE product
 );
 
 SELECT * FROM product;
+SELECT * FROM reply;
 
 delete from product where prod_price = 0;
 
