@@ -12,6 +12,7 @@
 
 ## 스프링 학습 관련
 
+https://www.youtube.com/watch?v=j5WlADp5f_o&list=PL9mhQYIlKEhfYqQ-UkO2pe2suSx9IoFT2
 - spring
 	- https://spring.io/projects/spring-framework
 	- (한글) https://blog.outsider.ne.kr/tag/spring_reference_documentation

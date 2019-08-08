@@ -27,14 +27,16 @@
 
 	<!-- 즉, 일반적으로 Service와 Dao 관련 된 객체들을 등록 -->
 
+	<!-- 클래스패스에 있는 env.properties 파일의 내용을 읽어서 스프링 설정 파일에 있는 ${프로퍼티이름} 표현을
+	해당 프로퍼티 값으로 변경해준다 -->
 	<context:property-placeholder location="classpath:env.properties" />
 
 	<!-- 데이터베이스와 연결을 생성해주는 데이터소스 객체 등록 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="${db.driver}" />
-		<property name="url" value="db.url" />
-		<property name="username" value="db.username" />
-		<property name="password" value="db.password" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
 		<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/com" />
 		<property name="username" value="com" />
